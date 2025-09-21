@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDRA TEJA | Portfolio</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General & Root Variables --- */
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #50e3c2;
+            --background-light: #f4f7f6;
+            --text-color-light: #333;
+            --card-bg-light: #ffffff;
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+            --background-dark: #1a1a2e;
+            --text-color-dark: #e0e0e0;
+            --card-bg-dark: #162447;
+            --shadow-dark: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* Basic Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light Mode (Default) */
+        body.light-mode {
+            background-color: var(--background-light);
+            color: var(--text-color-light);
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-color-dark);
+        }
+
+        /* --- Global Styles --- */
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .content-section {
+            padding: 100px 10%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        body.light-mode header { background-color: rgba(255, 255, 255, 0.8); }
+        body.dark-mode header { background-color: rgba(26, 26, 46, 0.8); }
+
+        header.scrolled {
+            box-shadow: var(--shadow-light);
+        }
+        body.dark-mode header.scrolled {
+            box-shadow: var(--shadow-dark);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 10%;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-switcher i {
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* --- Home Section --- */
+        .home-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(74, 144, 226, 0.5);
+            transition: transform 0.3s;
+        }
+        
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .home-content h1 {
+            font-size: 3rem;
+            margin: 0.5rem 0;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 400;
+        }
+
+        .home-buttons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+        }
+        body.light-mode .btn-secondary { color: var(--primary-color); }
+        body.dark-mode .btn-secondary { 
+            color: var(--text-color-dark);
+            border-color: var(--secondary-color);
+        }
+
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Typing Animation --- */
+        .tagline {
+            /* Ensure the container has a defined height to prevent layout shift */
+            min-height: 1.5em; 
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: var(--primary-color);
+            width: 3px; /* A thinner cursor looks more elegant */
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        .cursor.typing {
+            animation: none;
+        }
+
+        @keyframes blink {
+            0% { background-color: var(--primary-color); }
+            49% { background-color: var(--primary-color); }
+            50% { background-color: transparent; }
+            99% { background-color: transparent; }
+            100% { background-color: var(--primary-color); }
+        }
+
+        /* --- About Section --- */
+        .about-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* --- Skills Section --- */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .skill-category {
+            padding: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        body.light-mode .skill-category {
+            background-color: var(--card-bg-light);
+            box-shadow: var(--shadow-light);
+        }
+        body.dark-mode .skill-category {
+            background-color: var(--card-bg-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .skill-category h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .skill-category li {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        body.light-mode .skill-category li { background: var(--background-light); }
+        body.dark-mode .skill-category li { background: var(--background-dark); }
+        
+        .skill-category li:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .skill-category li:hover i {
+            color: white;
+        }
+
+        .skill-category i {
+            margin-right: 8px;
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+
+        /* --- Projects Section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        body.light-mode .project-card {
+            background: var(--card-bg-light);
+            box-shadow: var(--shadow-light);
+        }
+        body.dark-mode .project-card {
+            background: var(--card-bg-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-info h3 {
+            font-size: 1.4rem;
+        }
+        
+        .project-info p {
+            margin-bottom: 1rem;
+        }
+        
+        .tech-stack {
+            font-size: 0.9rem;
+            margin: auto 0 1rem 0;
+        }
+
+        .project-links a {
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+        .project-links i {
+            margin-right: 5px;
+        }
+
+        /* --- Education Section --- */
+        .education-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .education-item {
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            text-align: left;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .education-item::before {
+            content: '🎓';
+            position: absolute;
+            left: -20px;
+            top: 1.5rem;
+            background: var(--background-light);
+            border-radius: 50%;
+            padding: 4px;
+            font-size: 1.2rem;
+        }
+        
+        body.dark-mode .education-item::before {
+             background: var(--background-dark);
+        }
+
+
+        /* --- Contact Section --- */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            font-size: 1.1rem;
+        }
+
+        .social-links {
+            margin-top: 2.5rem;
+        }
+
+        .social-links a {
+            font-size: 2rem;
+            margin: 0 1rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-links a:hover {
+            transform: translateY(-5px);
+            color: var(--secondary-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 40px;
+            transition: background-color 0.3s;
+        }
+        body.light-mode footer { background-color: #e9ecef; }
+        body.dark-mode footer { background-color: #162447; }
+
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Simple hiding for mobile, can be replaced with a hamburger menu */
+            }
+            
+            nav {
+                padding: 1rem 5%;
+            }
+
+            .home-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 80px 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#home" class="logo">IndraTeja.dev</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="theme-switcher">
+                <i class="fas fa-sun" id="theme-toggle"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="home-section">
+            <div class="home-content">
+                <!-- Placeholder image from placehold.co -->
+                <img src="Indra photo.jpg" alt="Your Name" class="profile-photo">
+                <h1>Hi, I'm Indra Teja</h1>
+                <p class="tagline"><span id="typing-text"></span><span class="cursor">&nbsp;</span></p>
+                <div class="home-buttons">
+                    <!-- Placeholder link for resume -->
+                    <a href="Resumes/Indra_Teja_Resume_Fresher(2).pdf" download class="btn btn-primary">Download Resume <i class="fas fa-download"></i></a>
+                    <a href="#contact" class="btn btn-secondary">Hire Me</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section content-section">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-container">
+                <div class="about-text">
+                    <p>
+                        I am a recent Computer Science graduate with a strong passion for developing scalable web applications and a keen interest in cybersecurity. My goal is to leverage my skills in a challenging role where I can contribute to exciting projects and grow as a developer.
+                    </p>
+                    <p>
+                        <strong>Key Strengths:</strong> Quick learner, effective problem-solver, and a collaborative team player.
+                    </p>
+                    <p>
+                        <strong>Area of Interest:</strong> Full-Stack Web Development, Cloud Technologies, and Application Security.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section content-section">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming</h3>
+                    <ul>
+                        <li><i class="fab fa-python"></i> Python</li>
+                        <li><i class="fab fa-js-square"></i> JavaScript</li>
+                        <li><i class="fas fa-database"></i> SQL</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <ul>
+                        <li><i class="fab fa-html5"></i> HTML5</li>
+                        <li><i class="fab fa-css3-alt"></i> CSS3</li>
+                        <li><i class="fab fa-react"></i> React</li>
+                        <li><i class="fab fa-node-js"></i> Node.js</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Technologies</h3>
+                    <ul>
+                        <li><i class="fab fa-git-alt"></i> Git & GitHub</li>
+                        <li><i class="fa-brands fa-linux"></i>Linux Basics</li>
+                        <li><i class="fas fa-code"></i> VS Code</li>
+                        <li><i class="fas fa-terminal"></i>CLI</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section content-section">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <img src="Restaurant_pic.png" alt="Project 1 Screenshot">
+                    <div class="project-info">
+                        <h3>Sample Restaurant Landing page</h3>
+                        <p>A responsive and visually appealing restaurant website built purely with HTML and CSS. The website showcases modern web design principles, including layout, typography, and responsive design. This project demonstrates my ability to create static web pages with interactive sections and CSS animations for an engaging user experience.</p>
+                        <p class="tech-stack"><strong>Tech:</strong> HTML5, CSS3</p>
+                        <div class="project-links">
+                            <a href="https://github.com/indra-teja/Restaurant_Web_Page/blob/main/index.html" target="_blank"><i class="fab fa-github"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <img src="banking.webp" alt="Project 2 Screenshot">
+                    <div class="project-info">
+                        <h3>Simple Banking Management System</h3>
+                        <p>The Banking Management System is a mini-project that allows customers and administrators to manage banking operations digitally. It provides features like account creation, balance inquiry, deposit, withdrawal, fund transfer, and account closure. This project demonstrates knowledge of Python programming, SQL database integration, and CRUD operations.</p>
+                        <p class="tech-stack"><strong>Tech:</strong> Python, MySQL</p>
+                        <div class="project-links">
+                            <a href="https://github.com/indra-teja/simple_banking_management_system/blob/master/simple_banking_management_system.py" target="_blank">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                 <!-- Project 3 -->
+                <!--                 <div class="project-card">
+                    <img src="https://placehold.co/600x400/50e3c2/1a1a2e?text=Project+3" alt="Project 3 Screenshot">
+                    <div class="project-info">
+                        <h3>Weather Dashboard</h3>
+                        <p>A web app that fetches and displays real-time weather data from a third-party API based on a user's location search.</p>
+                        <p class="tech-stack"><strong>Tech:</strong> JavaScript, Fetch API, HTML, CSS</p>
+                        <div class="project-links">
+                            <a href="#" target="_blank"><i class="fab fa-github"></i> Code</a>
+                            <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        </div>
+                    </div>
+                 </div>
+                -->
+
+            
+        </section>
+
+        <!-- Education & Certifications Section -->
+        <section id="education" class="education-section content-section">
+            <h2 class="section-title">Education & Certifications</h2>
+            <div class="education-item">
+                <h3>Bachelor of Technology in Computer Science and cybersecurity</h3>
+                <p><strong>Chalapathi Institute of Engineering and Technology</strong> | 2021 - 2025</p>
+                <p>Relevant Coursework: Data Structures, Algorithms, OOP, DBMS, Networking.</p>
+            </div>
+            <div class="education-item">
+                <h3>Certified Python Developer</h3>
+                <p><strong>EduSkills Foundation</strong> | Issued: 2024</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section content-section">
+            <h2 class="section-title">Get In Touch</h2>
+            <p>I'm currently open to new opportunities and would love to hear from you. Feel free to reach out via email or connect with me on social media!</p>
+            <a href="mailto:indraattimalla@gmail.com" class="btn btn-primary">Email Me <i class="fas fa-paper-plane"></i></a>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/indra-teja-attimalla" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/indra-teja" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 by Indra Teja. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const header = document.querySelector('header');
+
+            // --- Theme Toggler ---
+            const applyTheme = (theme) => {
+                if (theme === 'dark-mode') {
+                    body.classList.remove('light-mode');
+                    body.classList.add('dark-mode');
+                    themeToggle.classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    body.classList.remove('dark-mode');
+                    body.classList.add('light-mode');
+                    themeToggle.classList.replace('fa-moon', 'fa-sun');
+                }
+            };
+
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else {
+                applyTheme(prefersDark ? 'dark-mode' : 'light-mode');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const newTheme = body.classList.contains('light-mode') ? 'dark-mode' : 'light-mode';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // --- Header Shadow on Scroll ---
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // --- Scroll Animations ---
+            const sections = document.querySelectorAll('.content-section');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- Typing Animation ---
+            const typingTextSpan = document.getElementById('typing-text');
+            const cursorSpan = document.querySelector('.cursor');
+
+            const textArray = ["Aspiring Software Developer", "Web Developer"];
+            const typingDelay = 100;
+            const erasingDelay = 50;
+            const newTextDelay = 2000; // Delay before starting to type a new text
+            let textArrayIndex = 0;
+            let charIndex = 0;
+
+            function type() {
+                if (charIndex < textArray[textArrayIndex].length) {
+                    if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                    typingTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, typingDelay);
+                } else {
+                    cursorSpan.classList.remove("typing");
+                    setTimeout(erase, newTextDelay);
+                }
+            }
+
+            function erase() {
+                if (charIndex > 0) {
+                    if(!cursorSpan.classList.contains("typing")) cursorSpan.classList.add("typing");
+                    typingTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(erase, erasingDelay);
+                } else {
+                    cursorSpan.classList.remove("typing");
+                    textArrayIndex++;
+                    if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+                    setTimeout(type, typingDelay + 500);
+                }
+            }
+
+            // Start the animation on page load
+            if (textArray.length) setTimeout(type, newTextDelay - 1000);
+        });
+    </script>
+</body>
+</html>
+
